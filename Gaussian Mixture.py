@@ -31,17 +31,11 @@ def θ():
   return (P_z0, mean0, variance0), (P_z1, mean1, variance1)
 θ = θ()
 
-def P_xi_given_zj(x, mean, variance):
-  return gauss(x, mean, variance)
-def P_xi_and_zj(x, P_z, mean, variance):
-  return P_z*P_xi_given_zj(x, mean, variance)
-def P_xi(x, θ):
-  return sum(P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in θ)
-
 log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
 while abs(log_likelihood1-log_likelihood0)>1e-6:
   def expectation_step(x, θ):
-    P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in θ] for x in x]
+    P_x_given_z = [[gauss(x, mean, variance) for P_z, mean, variance in θ] for x in x]
+    P_x_and_z = [[P_z*P_xi_given_zj for (P_z,_,_), P_xi_given_zj in zip(θ, P_xi_given_z)] for P_xi_given_z in P_x_given_z]
     P_x = [sum(P_xi_and_z) for P_xi_and_z in P_x_and_z]
     P_z_given_x = [[P_xi_and_zj/P_xi for P_xi_and_zj in P_xi_and_z] for P_xi_and_z, P_xi in zip(P_x_and_z, P_x)]
     return P_z_given_x
@@ -69,6 +63,11 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     weights = np.ones_like(x)/len(x)/bin_size
     pyplot.hist(x, bins=bins, weights=weights, color='g', alpha=0.3, label='Samples')
     x = np.linspace(x.min(), x.max(), 1000)
+    def P_xi(x, θ):
+      P_xi_given_z = [gauss(x, mean, variance) for P_z, mean, variance in θ]
+      P_xi_and_z = [P_z*P_xi_given_zj for (P_z,_,_), P_xi_given_zj in zip(θ, P_xi_given_z)]
+      P_xi = sum(P_xi_and_z)
+      return P_xi
     y = P_xi(x, target_θ)
     pyplot.plot(x, y, 'g-', alpha=0.3, label='P(x)')
     y = P_xi(x, θ)
@@ -82,7 +81,8 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   show(x)
 
   def log_likelihood(x, θ):
-    P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in θ] for x in x]
+    P_x_given_z = [[gauss(x, mean, variance) for P_z, mean, variance in θ] for x in x]
+    P_x_and_z = [[P_z*P_xi_given_zj for (P_z,_,_), P_xi_given_zj in zip(θ, P_xi_given_z)] for P_xi_given_z in P_x_given_z]
     from math import log
     return sum([log(sum(P_xi_and_z)) for P_xi_and_z in P_x_and_z])
   log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
