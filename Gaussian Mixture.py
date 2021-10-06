@@ -15,14 +15,14 @@ def true_parameters():
   return (P_z0, mean0, variance0), (P_z1, mean1, variance1)
 true_parameters = true_parameters()
 
-def observed_data(true_parameters):
+def x(true_parameters):
   (P_z0, mean0, variance0), (P_z1, mean1, variance1) = true_parameters
   def sample():
     import numpy as np
     if np.random.rand()<P_z0: return np.random.normal(mean0, variance0**0.5)
     else: return np.random.normal(mean1, variance1**0.5)
   return np.array([sample() for _ in range(1000)])
-observed_data = observed_data(true_parameters)
+x = x(true_parameters)
 
 def parameters():
   from numpy.random import rand
@@ -40,23 +40,23 @@ def P_xi(x, parameters):
 
 log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
 while abs(log_likelihood1-log_likelihood0)>1e-6:
-  def expectation_step(observed_data, parameters):
-    P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters] for x in observed_data]
+  def expectation_step(x, parameters):
+    P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters] for x in x]
     P_x = [sum(P_xi_and_z) for P_xi_and_z in P_x_and_z]
     P_z_given_x = [[P_xi_and_zj/P_xi for P_xi_and_zj in P_xi_and_z] for P_xi_and_z, P_xi in zip(P_x_and_z, P_x)]
     return P_z_given_x
-  P_z_given_x = expectation_step(observed_data, parameters)
+  P_z_given_x = expectation_step(x, parameters)
 
-  def maximization_step(P_z_given_x, observed_data):
+  def maximization_step(P_z_given_x, x):
     P_z_given_x = list(zip(*P_z_given_x))
     def update(P_zi_given_x):
-      P_zi = sum(P_zi_given_x)/len(observed_data)
-      mean = sum(P_zi_given_xj*x for P_zi_given_xj, x in zip(P_zi_given_x, observed_data))/sum(P_zi_given_x)
-      variance = sum(P_zi_given_xj*(x-mean)**2 for P_zi_given_xj, x in zip(P_zi_given_x, observed_data))/sum(P_zi_given_x)
+      P_zi = sum(P_zi_given_x)/len(x)
+      mean = sum(P_zi_given_xj*x for P_zi_given_xj, x in zip(P_zi_given_x, x))/sum(P_zi_given_x)
+      variance = sum(P_zi_given_xj*(x-mean)**2 for P_zi_given_xj, x in zip(P_zi_given_x, x))/sum(P_zi_given_x)
       return P_zi, mean, variance
-    parameters = [update(P_zi_given_x) for P_zi_given_x in P_z_given_x]
+    parameters = [update(P_zi_given_x) for P_zi_given_x in  P_z_given_x]
     return parameters
-  parameters = maximization_step(P_z_given_x, observed_data)
+  parameters = maximization_step(P_z_given_x, x)
 
   def show(x):
     import numpy as np
@@ -79,10 +79,10 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
       pyplot.plot([mean, mean], [0, y], '|-b', alpha=0.3, linewidth=1)
     pyplot.show(block=False)
     pyplot.pause(0.01)
-  show(observed_data)
+  show(x)
 
-  def log_likelihood(observed_data, parameters):
-    P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters] for x in observed_data]
+  def log_likelihood(x, parameters):
+    P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters] for x in x]
     from math import log
     return sum([log(sum(P_xi_and_z)) for P_xi_and_z in P_x_and_z])
-  log_likelihood1, log_likelihood0 = log_likelihood(observed_data, parameters), log_likelihood1
+  log_likelihood1, log_likelihood0 = log_likelihood(x, parameters), log_likelihood1
