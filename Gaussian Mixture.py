@@ -5,6 +5,10 @@ http://courses.cs.washington.edu/courses/cse312/11wi/slides/12em.pdf
 import numpy as np
 np.random.seed(1)
 
+def gauss(x, mean, variance):
+  from numpy import pi, sqrt, exp
+  return 1/sqrt(2*pi*variance) * exp(-(x-mean)**2/(2*variance))
+
 def true_parameters():
   P_z0, mean0, variance0 = 0.7, 8.0, 2.0
   P_z1, mean1, variance1 = (1-P_z0), 13.0, 1.0
@@ -27,9 +31,6 @@ def parameters():
   return (P_z0, mean0, variance0), (P_z1, mean1, variance1)
 parameters = parameters()
 
-def gauss(x, mean, variance):
-  from numpy import pi, sqrt, exp
-  return 1/sqrt(2*pi*variance) * exp(-(x-mean)**2/(2*variance))
 def P_xi_given_zj(x, mean, variance):
   return gauss(x, mean, variance)
 def P_xi_and_zj(x, P_z, mean, variance):
