@@ -86,5 +86,3 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     from math import log
     return sum([log(sum(P_xi_and_z)) for P_xi_and_z in P_x_and_z])
   log_likelihood1, log_likelihood0 = log_likelihood(observed_data, parameters), log_likelihood1
-  print(log_likelihood1)
-print(parameters)
