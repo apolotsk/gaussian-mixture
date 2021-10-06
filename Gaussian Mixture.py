@@ -38,28 +38,6 @@ def P_xi_and_zj(x, P_z, mean, variance):
 def P_xi(x, parameters):
   return sum(P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters)
 
-def show(block=True):
-  import numpy as np
-  from matplotlib import pyplot
-  pyplot.clf()
-  pyplot.xlabel('x')
-  pyplot.ylabel('P(x|θ)')
-  x = np.linspace(0, 20, 1000)
-  bin_size = 0.5
-  bins = np.arange(x.min(), x.max(), bin_size)
-  weights = np.ones_like(observed_data)/len(observed_data)/bin_size
-  pyplot.hist(observed_data, bins=bins, weights=weights, color='r', alpha=0.3, label='Samples')
-  y = P_xi(x, true_parameters)
-  pyplot.plot(x, y, 'g-', alpha=0.3, label='P(x)')
-  y = P_xi(x, parameters)
-  pyplot.plot(x, y, 'b-', label='P(x|θ)')
-  for P_zi, mean, variance in parameters:
-    y = P_xi(mean, parameters)
-    pyplot.plot([mean-variance**0.5, mean+variance**0.5], [y/2, y/2], '|-b', alpha=0.3, linewidth=1)
-    pyplot.plot([mean, mean], [0, y], '|-b', alpha=0.3, linewidth=1)
-  pyplot.show(block=block)
-  pyplot.pause(0.01)
-
 log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
 while abs(log_likelihood1-log_likelihood0)>1e-6:
   def expectation_step(observed_data, parameters):
@@ -79,7 +57,29 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     parameters = [update(P_zi_given_x) for P_zi_given_x in P_z_given_x]
     return parameters
   parameters = maximization_step(P_z_given_x, observed_data)
-  show(block=False)
+
+  def show():
+    import numpy as np
+    from matplotlib import pyplot
+    pyplot.clf()
+    pyplot.xlabel('x')
+    pyplot.ylabel('P(x|θ)')
+    x = np.linspace(0, 20, 1000)
+    bin_size = 0.5
+    bins = np.arange(x.min(), x.max(), bin_size)
+    weights = np.ones_like(observed_data)/len(observed_data)/bin_size
+    pyplot.hist(observed_data, bins=bins, weights=weights, color='r', alpha=0.3, label='Samples')
+    y = P_xi(x, true_parameters)
+    pyplot.plot(x, y, 'g-', alpha=0.3, label='P(x)')
+    y = P_xi(x, parameters)
+    pyplot.plot(x, y, 'b-', label='P(x|θ)')
+    for P_zi, mean, variance in parameters:
+      y = P_xi(mean, parameters)
+      pyplot.plot([mean-variance**0.5, mean+variance**0.5], [y/2, y/2], '|-b', alpha=0.3, linewidth=1)
+      pyplot.plot([mean, mean], [0, y], '|-b', alpha=0.3, linewidth=1)
+    pyplot.show(block=False)
+    pyplot.pause(0.01)
+  show()
 
   def log_likelihood(observed_data, parameters):
     P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters] for x in observed_data]
@@ -88,4 +88,3 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   log_likelihood1, log_likelihood0 = log_likelihood(observed_data, parameters), log_likelihood1
   print(log_likelihood1)
 print(parameters)
-show()
