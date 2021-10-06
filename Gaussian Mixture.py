@@ -9,20 +9,20 @@ def gauss(x, mean, variance):
   from numpy import pi, sqrt, exp
   return 1/sqrt(2*pi*variance) * exp(-(x-mean)**2/(2*variance))
 
-def true_θ():
+def target_θ():
   P_z0, mean0, variance0 = 0.7, 8.0, 2.0
   P_z1, mean1, variance1 = (1-P_z0), 13.0, 1.0
   return (P_z0, mean0, variance0), (P_z1, mean1, variance1)
-true_θ = true_θ()
+target_θ = target_θ()
 
-def x(true_θ):
-  (P_z0, mean0, variance0), (P_z1, mean1, variance1) = true_θ
+def x(target_θ):
+  (P_z0, mean0, variance0), (P_z1, mean1, variance1) = target_θ
   def sample():
     import numpy as np
     if np.random.rand()<P_z0: return np.random.normal(mean0, variance0**0.5)
     else: return np.random.normal(mean1, variance1**0.5)
   return np.array([sample() for _ in range(1000)])
-x = x(true_θ)
+x = x(target_θ)
 
 def θ():
   from numpy.random import rand
@@ -69,7 +69,7 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     weights = np.ones_like(x)/len(x)/bin_size
     pyplot.hist(x, bins=bins, weights=weights, color='g', alpha=0.3, label='Samples')
     x = np.linspace(x.min(), x.max(), 1000)
-    y = P_xi(x, true_θ)
+    y = P_xi(x, target_θ)
     pyplot.plot(x, y, 'g-', alpha=0.3, label='P(x)')
     y = P_xi(x, θ)
     pyplot.plot(x, y, 'b-', label='P(x|θ)')
