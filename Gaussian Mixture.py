@@ -21,7 +21,7 @@ def observed_data(true_parameters):
     import numpy as np
     if np.random.rand()<P_z0: return np.random.normal(mean0, variance0**0.5)
     else: return np.random.normal(mean1, variance1**0.5)
-  return [sample() for _ in range(1000)]
+  return np.array([sample() for _ in range(1000)])
 observed_data = observed_data(true_parameters)
 
 def parameters():
@@ -58,17 +58,17 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     return parameters
   parameters = maximization_step(P_z_given_x, observed_data)
 
-  def show():
+  def show(x):
     import numpy as np
     from matplotlib import pyplot
     pyplot.clf()
     pyplot.xlabel('x')
     pyplot.ylabel('P(x|θ)')
-    x = np.linspace(0, 20, 1000)
     bin_size = 0.5
     bins = np.arange(x.min(), x.max(), bin_size)
-    weights = np.ones_like(observed_data)/len(observed_data)/bin_size
-    pyplot.hist(observed_data, bins=bins, weights=weights, color='r', alpha=0.3, label='Samples')
+    weights = np.ones_like(x)/len(x)/bin_size
+    pyplot.hist(x, bins=bins, weights=weights, color='g', alpha=0.3, label='Samples')
+    x = np.linspace(x.min(), x.max(), 1000)
     y = P_xi(x, true_parameters)
     pyplot.plot(x, y, 'g-', alpha=0.3, label='P(x)')
     y = P_xi(x, parameters)
@@ -79,7 +79,7 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
       pyplot.plot([mean, mean], [0, y], '|-b', alpha=0.3, linewidth=1)
     pyplot.show(block=False)
     pyplot.pause(0.01)
-  show()
+  show(observed_data)
 
   def log_likelihood(observed_data, parameters):
     P_x_and_z = [[P_xi_and_zj(x, P_z, mean, variance) for P_z, mean, variance in parameters] for x in observed_data]
