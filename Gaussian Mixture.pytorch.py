@@ -33,7 +33,7 @@ def θ():
 
 def optimizer(parameters):
   from torch.optim import SGD
-  return SGD(parameters, lr=0.001)
+  return SGD(parameters, lr=1.0)
 optimizer = optimizer(θ)
 
 log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
@@ -50,7 +50,7 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     P_x = P_z_and_x.sum(dim=0)
     return P_x
   def log_likelihood(x, θ):
-    return torch.log(P_x(x, θ)).sum(dim=0)
+    return torch.log(P_x(x, θ)).mean(dim=0)
   log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
 
   def update_parameters():

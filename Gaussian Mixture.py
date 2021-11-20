@@ -85,5 +85,5 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   show(x)
 
   def log_likelihood(x, θ):
-    return np.log(P_x(x, θ)).sum(axis=0)
+    return np.log(P_x(x, θ)).mean(axis=0)
   log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
