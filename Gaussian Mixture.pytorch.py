@@ -38,13 +38,6 @@ optimizer = optimizer(θ)
 
 log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
 while abs(log_likelihood1-log_likelihood0)>1e-6:
-  '''
-  def P_x(x, θ):
-    P_z, means, stdevs = θ
-    from torch.distributions import MixtureSameFamily, Categorical, Independent, Normal
-    distribution = MixtureSameFamily(Categorical(P_z), Independent(Normal(means.T, stdevs.T), 1))
-    return torch.exp(distribution.log_prob(x))
-  '''
   def P_x(x, θ):
     P_z, means, stdevs = θ
     P_z = P_z/P_z.sum(dim=1, keepdim=True)
