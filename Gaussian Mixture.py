@@ -79,6 +79,7 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     y = P_x(means.T, θ).T
     pyplot.plot(means + [[-1],[1]]*stdevs, y/[[2],[2]], '|-b', alpha=0.3, linewidth=1)
     pyplot.plot([[1],[1]]*means, [[0],[1]]*y, '|-b', alpha=0.3, linewidth=1)
+
     pyplot.show(block=False)
     pyplot.pause(0.01)
   show(x)
