@@ -26,7 +26,7 @@ x = x(target_θ)
 
 def θ():
   P_z = np.ones([1, z_length])/z_length
-  means = np.random.rand(1, z_length)*20-10
+  means = np.random.rand(1, z_length)*20
   stdevs = np.random.rand(1, z_length)*5
   return P_z, means, stdevs
 θ = θ()
