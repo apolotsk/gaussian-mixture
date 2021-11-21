@@ -25,8 +25,7 @@ def x(target_θ):
 x = x(target_θ)
 
 def θ():
-  def normalize(x, axis=1): return x/x.sum(axis=axis, keepdims=True)
-  P_z = normalize(np.random.rand(1, z_length)*0.5+0.25)
+  P_z = np.ones([1, z_length])/z_length
   means = np.random.rand(1, z_length)*20-10
   stdevs = np.random.rand(1, z_length)*5
   return P_z, means, stdevs
