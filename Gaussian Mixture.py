@@ -58,7 +58,6 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     return P_x
 
   def show(x):
-    import numpy as np
     from matplotlib import pyplot
     pyplot.clf()
     pyplot.xlabel('x')
