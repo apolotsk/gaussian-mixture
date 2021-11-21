@@ -50,6 +50,13 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     return P_z, means, stdevs
   θ = maximization_step(P_z_given_x, x)
 
+  def P_x(x, θ):
+    P_z, means, stdevs = θ
+    P_x_given_z = gauss(x, means, stdevs)
+    P_x_and_z = P_z*P_x_given_z
+    P_x = P_x_and_z.sum(axis=1, keepdims=True)
+    return P_x
+
   def show(x):
     import numpy as np
     from matplotlib import pyplot
@@ -62,12 +69,6 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     pyplot.hist(x, bins=bins, weights=weights, color='g', alpha=0.3, label='Samples')
 
     x = np.linspace([x.min()], [x.max()], 1000)
-    def P_x(x, θ):
-      P_z, means, stdevs = θ
-      P_x_given_z = gauss(x, means, stdevs)
-      P_x_and_z = P_z*P_x_given_z
-      P_x = P_x_and_z.sum(axis=1, keepdims=True)
-      return P_x
     y = P_x(x, target_θ)
     pyplot.plot(x, y, 'g-', alpha=0.3, label='P(x)')
 
@@ -84,9 +85,5 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   show(x)
 
   def log_likelihood(x, θ):
-    P_z, means, stdevs = θ
-    P_x_given_z = gauss(x, means, stdevs)
-    P_x_and_z = P_z*P_x_given_z
-    P_x = P_x_and_z.sum(axis=1)
-    return np.log(P_x).sum(axis=0)
+    return np.log(P_x(x, θ)[:,0]).sum(axis=0)
   log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
