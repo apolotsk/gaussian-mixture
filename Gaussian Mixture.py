@@ -60,8 +60,8 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   def show(x):
     from matplotlib import pyplot
     pyplot.clf()
-    pyplot.xlabel('x')
-    pyplot.ylabel('p(x|θ)')
+    pyplot.xlabel('$x$')
+    pyplot.ylabel('$p(x|θ)$')
     bin_size = 0.5
     bins = np.arange(x.min(), x.max(), bin_size)
     weights = np.ones_like(x)/len(x)/bin_size
@@ -69,10 +69,10 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
 
     x = np.linspace(x.min(), x.max(), 1000)
     y = p_x(x, target_θ)
-    pyplot.plot(x, y, 'g-', alpha=0.3, label='p(x)')
+    pyplot.plot(x, y, 'g-', alpha=0.3, label='$p(x)$')
 
     y = p_x(x, θ)
-    pyplot.plot(x, y, 'b-', label='p(x|θ)')
+    pyplot.plot(x, y, 'b-', label='$p(x|θ)$')
 
     p_z, means, stdevs = θ
     means, stdevs = means.T, stdevs.T
