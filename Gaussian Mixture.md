@@ -12,11 +12,11 @@ Description:
 Definitions:
 - $x$ is the sample value.
   - $x$ is the _observable_ data.
-    ![Histogram of the observable data](.Gaussian%20Mixture.md/Histogram%20of%20the%20observable%20data.svg)
+  </br>![Histogram of the observable data](.Gaussian%20Mixture.md/Histogram%20of%20the%20observable%20data.svg)
 - $z$ is the selected Gaussian.
   - $z$ is the _latent_ data.
   - $z \in \{ 1, 2, ..., n \}$.
-    ![Histogram of the observable data and the latent data](.Gaussian%20Mixture.md/Histogram%20of%20the%20observable%20data%20and%20the%20latent%20data.svg)
+   </br>![Histogram of the observable data and the latent data](.Gaussian%20Mixture.md/Histogram%20of%20the%20observable%20data%20and%20the%20latent%20data.svg)
 - That is, they know the set of $(x,z)$, but tell us only the set of $x$.
 - We want to infer the biases (the parameters).
   - This allows to infer the set of $(x,z)$.
@@ -28,13 +28,13 @@ $θ := \{ p(z|θ), \mu_{z|θ}, \sigma_{z|θ} \text{ for } z \in \{1, 2, ..., n \
 - $\sigma_{z|θ}$ is the standard deviation of the Gaussian $z$.
 
 $\color{green}{p(x,z|θ)} = p(z|θ) p(x|z,θ)$
-- $p(x|z,θ) := \mathcal{N}(x|\mu,\sigma)$
+- $p(x|z,θ) := \mathcal{N}(x|\mu_{z|θ},\sigma_{z|θ})$
   - $\mathcal{N}(x|\mu,\sigma) := \frac 1 {\sigma {\sqrt {2\pi }}} e^{- \frac {(x-\mu)^2} {2 \sigma^2}}$
   - $\mathcal{N}(x|\mu,\sigma)$ is a normal (Gaussian) distribution.
   - $p(x=a|z,θ)$ is the probability to sample value $a$ from the Gaussian $z$.
 
 $θ_{t+1} := \{ p(z|θ_{t+1}), \mu_{z|θ_{t+1}}, \sigma_{z|θ_{t+1}} \text{ for } z \in \{1, 2, ..., n \} \}$
-- $p(z|θ_{t+1}) := \sum_x \color{orange}{p(z|x,θ_t)} \Big/ |X|$
+- $p(z|θ_{t+1}) := \sum_x \color{orange}{p(z|x,θ_t)} / |X|$
   - $\sum_x p(z|x,θ_t)$ is the number of coin $z$ choices.
   - $|X|$ is the number of any coin choices.
 - $\mu_{z|θ_{t+1}} := \sum_x x \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}$
