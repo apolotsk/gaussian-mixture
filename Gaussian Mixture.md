@@ -49,9 +49,9 @@ Proof:
       - $𝜆$ is the _Lagrange multiplier_.
     - $= \frac \partial {\partial p(z|θ)} L(θ|θ_t,X) - \frac \partial {\partial p(z|θ)} 𝜆 \cdot (\sum_z p(z|θ)-1)$
     - $= \frac \partial {\partial p(z|θ)} L(θ|θ_t,X) - 𝜆$
-    - $= \sum_x \color{orange}{p(z|x,θ_t)}/p(z|θ)/|X| - 𝜆$
-  - $\sum_x \color{orange}{p(z|x,θ_t)}/p(z|θ)/|X| - 𝜆 = 0$
-  - $𝜆 = \sum_x \color{orange}{p(z|x,θ_t)}/p(z|θ)/|X|$
+    - $= \sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(z|θ) - 𝜆$
+  - $\sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(z|θ) - 𝜆 = 0$
+  - $𝜆 = \sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(z|θ)$
   - $𝜆 \cdot p(z|θ) = \sum_x \color{orange}{p(z|x,θ_t)}/|X|$
   - $\sum_z 𝜆 \cdot p(z|θ) = \sum_z \sum_x \color{orange}{p(z|x,θ_t)}/|X|$
   - $𝜆 \cdot \sum_z p(z|θ) = \sum_x \sum_z \color{orange}{p(z|x,θ_t)}/|X|$
@@ -63,23 +63,23 @@ Proof:
   - $\frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) = 0$
     - $= \frac \partial {\partial p(x|z,θ)}( L(θ|θ_t,X) - 𝜆 \cdot (\sum_z p(x|z,θ)-1))$
       - $𝜆$ is the _Lagrange multiplier_.
-    - $= \color{orange}{p(z|x,θ_t)}/p(x|z,θ)/|X| - 𝜆$
-  - $\color{orange}{p(z|x,θ_t)}/p(x|z,θ)/|X| - 𝜆 = 0$
-  - $𝜆 = \color{orange}{p(z|x,θ_t)}/p(x|z,θ)/|X|$
+    - $= \color{orange}{p(z|x,θ_t)}/|X|/p(x|z,θ) - 𝜆$
+  - $\color{orange}{p(z|x,θ_t)}/|X|/p(x|z,θ) - 𝜆 = 0$
+  - $𝜆 = \color{orange}{p(z|x,θ_t)}/|X|/p(x|z,θ)$
   - $𝜆 \cdot p(x|z,θ) = \color{orange}{p(z|x,θ_t)}/|X|$
   - $\sum_x 𝜆 \cdot p(x|z,θ) = \sum_x \color{orange}{p(z|x,θ_t)}/|X|$
   - $𝜆 \cdot \sum_x p(x|z,θ) = p(z|θ)$
   - $𝜆 \cdot 1 = p(z|θ)$
   - $𝜆 = p(z|θ)$
-  - $\color{orange}{p(z|x,θ_t)} / p(x|z,θ)/|X| - p(z|θ) = 0$
-  - $p(x|z,θ) = \color{orange}{p(z|x,θ_t)}/|X| \Big/ p(z|θ)$
-  - $= \color{orange}{p(z|x,θ_t)} / |X| \Big/ p(z|θ_{t+1})$
+  - $\color{orange}{p(z|x,θ_t)}/|X| / p(x|z,θ) - p(z|θ) = 0$
+  - $p(x|z,θ) = \color{orange}{p(z|x,θ_t)}/|X| / p(z|θ)$
+  - $= \color{orange}{p(z|x,θ_t)} / |X| / p(z|θ_{t+1})$
 - $\mu_{z|θ_{t+1}}$
   - $:= \arg\max_{\mu_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \mu_{z|θ}} L(θ|θ_t,X) = 0$
     - $= \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \mu_{z|θ}}$
   - $\frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X)$
-    - $= \sum_x \color{orange}{p(z|x,θ_t)}/p(x|z,θ)/|X|$
+    - $= \sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(x|z,θ)$
   - $\frac {\partial p(x|z,θ)} {\partial \mu_{z|θ}}$
     - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot (-\frac 1 {2\sigma_{z|θ}^2} \cdot 2 \cdot (x-\mu_{z|θ}) \cdot (-1))$
     - $= p(x|z,θ) \cdot (x-\mu_{z|θ})/\sigma_{z|θ}^2$
