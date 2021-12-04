@@ -57,6 +57,9 @@ Proof:
   - $𝜆 \cdot \sum_z p(z|θ) = \sum_x \sum_z \color{orange}{p(z|x,θ_t)}/|X|$
   - $𝜆 \cdot 1 = \sum_x 1/|X|$
   - $𝜆 = 1$
+  - $\sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(z|θ) - 1 = 0$
+  - $1 = \sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(z|θ)$
+  - $p(z|θ) = \sum_x \color{orange}{p(z|x,θ_t)}/|X|$
   - $= \sum_x \color{orange}{p(z|x,θ_t)} / |X|$
 - $p(x|z,θ_{t+1})$
   - $:= \arg\max_{p(x|z,θ)} L(θ|θ_t,X)$
