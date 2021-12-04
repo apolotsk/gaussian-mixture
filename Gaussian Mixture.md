@@ -94,9 +94,9 @@ Proof:
 - $\sigma_{z|θ_{t+1}}$
   - $:= \arg\max_{\sigma_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \sigma_{z|θ}} L(θ|θ_t,X) = 0$
-  - $= \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
+    - $= \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
   - $\frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
-    - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac {-(x-\mu)^2} 2 \frac {-2} {\sigma_{z|θ}^3} - \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac 1 \sigma_{z|θ}$
+    - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac {-(x-\mu_{z|θ})^2} 2 \frac {-2} {\sigma_{z|θ}^3} - \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac 1 \sigma_{z|θ}$
     - $= p(x|z,θ) \cdot (x-\mu_{z|θ})^2\sigma_{z|θ}^{-3} - p(x|z,θ) \cdot \sigma_{z|θ}^{-1}$
     - $= p(x|z,θ) \cdot \sigma_{z|θ}^{-3} \left( (x-\mu_{z|θ})^2 - \sigma_{z|θ}^2 \right)$
   - $\sum_x \color{orange}{p(z|x,θ_t)}/|X| \cdot \sigma_{z|θ}^{-3} \left( (x-\mu_{z|θ})^2 - \sigma_{z|θ}^2 \right) = 0$
