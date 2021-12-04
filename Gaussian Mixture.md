@@ -37,8 +37,9 @@ $θ_{t+1} := \{ p(z|θ_{t+1}), \mu_{z|θ_{t+1}}, \sigma_{z|θ_{t+1}} \text{ for 
 - $p(z|θ_{t+1}) := \sum_x \color{orange}{p(z|x,θ_t)} / |X|$
   - $\sum_x p(z|x,θ_t)$ is the number of coin $z$ choices.
   - $|X|$ is the number of any coin choices.
-- $\mu_{z|θ_{t+1}} := \sum_x x \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}$
-- $\sigma_{z|θ_{t+1}} := \sqrt {\sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}}$
+- $\mu_{z|θ_{t+1}} := \sum_x x \cdot p(x|z,θ_{t+1})$
+  - $p(x|z,θ_{t+1}) := \color{orange}{p(z|x,θ_t)} / |X| \Big/ p(z|θ_{t+1})$
+- $\sigma_{z|θ_{t+1}} := \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
 
 Proof:
 - $p(z|θ_{t+1})$
@@ -56,7 +57,25 @@ Proof:
   - $𝜆 \cdot \sum_z p(z|θ) = \sum_x \sum_z \color{orange}{p(z|x,θ_t)}$
   - $𝜆 \cdot 1 = \sum_x 1$
   - $𝜆 = |X|$
-  - $= \sum_x \color{orange}{p(z|x,θ_t)} \Big/ |X|$
+  - $= \sum_x \color{orange}{p(z|x,θ_t)} / |X|$
+- $p(x|z,θ_{t+1})$
+  - $:= \arg\max_{p(x|z,θ)} L(θ|θ_t,X)$
+  - $\frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) = 0$
+    - $= \frac \partial {\partial p(x|z,θ)}( L(θ|θ_t,X) - 𝜆 \cdot (\sum_z p(x|z,θ)-1))$
+      - $𝜆$ is the _Lagrange multiplier_.
+    - $= \color{orange}{p(z|x,θ_t)} / p(x|z,θ) - 𝜆$
+  - $\color{orange}{p(z|x,θ_t)} / p(x|z,θ) - 𝜆 = 0$
+  - $𝜆 = \color{orange}{p(z|x,θ_t)} / p(x|z,θ)$
+  - $𝜆 \cdot p(x|z,θ) = \color{orange}{p(z|x,θ_t)}$
+  - $\sum_x 𝜆 \cdot p(x|z,θ) = \sum_x \color{orange}{p(z|x,θ_t)}$
+  - $𝜆 \cdot \sum_x p(x|z,θ) = \sum_x \color{orange}{p(z|x,θ_t)}$
+  - $𝜆 \cdot 1 = \sum_x \color{orange}{p(z|x,θ_t)}$
+  - $𝜆 = \sum_x \color{orange}{p(z|x,θ_t)}$
+  - $\color{orange}{p(z|x,θ_t)} / p(x|z,θ) - \sum_x \color{orange}{p(z|x,θ_t)} = 0$
+  - $p(x|z,θ) = \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}$
+  - $p(x|z,θ) = \color{orange}{p(z|x,θ_t)} /|X| \Big/ \sum_x \color{orange}{p(z|x,θ_t)} / |X|$
+  - $p(x|z,θ) = \color{orange}{p(z|x,θ_t)} /|X| \Big/ p(z|θ)$
+  - $= \color{orange}{p(z|x,θ_t)} / |X| \Big/ p(z|θ_{t+1})$
 - $\mu_{z|θ_{t+1}}$
   - $:= \arg\max_{\mu_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \mu_{z|θ}} L(θ|θ_t,X) = 0$
@@ -71,7 +90,10 @@ Proof:
   - $\sum_x \color{orange}{p(z|x,θ_t)} \cdot \mu_{z|θ} = \sum_x \color{orange}{p(z|x,θ_t)} \cdot x$
   - $\mu_{z|θ} \cdot \sum_x \color{orange}{p(z|x,θ_t)} = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}$
   - $\mu_{z|θ} = \sum_x x \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}$
-  - $= \sum_x x \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}$
+  - $\mu_{z|θ} = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}/|X| \Big/ \sum_x \color{orange}{p(z|x,θ_t)}/|X|$
+  - $\mu_{z|θ} = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}/|X| \Big/ p(z|θ)$
+  - $\mu_{z|θ} = \sum_x x \cdot p(x|z,θ)$
+  - $= \sum_x x \cdot p(x|z,θ_{t+1})$
 - $\sigma_{z|θ_{t+1}}$
   - $:= \arg\max_{\sigma_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \sigma_{z|θ}} L(θ|θ_t,X) = 0$
@@ -85,4 +107,7 @@ Proof:
   - $\sum_x \color{orange}{p(z|x,θ_t)} \cdot \sigma_{z|θ}^2 = \sum_x \color{orange}{p(z|x,θ_t)} \cdot (x-\mu_{z|θ})^2$
   - $\sigma_{z|θ}^2 \cdot \sum_x \color{orange}{p(z|x,θ_t)} = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}$
   - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}$
-  - $= \sqrt {\sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot \color{orange}{p(z|x,θ_t)} \Big/ \sum_x \color{orange}{p(z|x,θ_t)}}$
+  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}/|X| \Big/ \sum_x \color{orange}{p(z|x,θ_t)}/|X|$
+  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}/|X| \Big/ p(z|θ)$
+  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot p(x|z,θ)$
+  - $= \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
