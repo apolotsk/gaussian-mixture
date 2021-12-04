@@ -43,10 +43,11 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   p_z_given_x = expectation_step(x, θ)
 
   def maximization_step(p_z_given_x, x):
-    w = p_z_given_x.sum(axis=1, keepdims=True)
-    p_z = w/len(x)
-    means = (p_z_given_x*x).sum(axis=1, keepdims=True)/w
-    stdevs = np.sqrt((p_z_given_x*(x-means)**2).sum(axis=1, keepdims=True)/w)
+    p_x_and_z = p_z_given_x/len(x)
+    p_z = p_x_and_z.sum(axis=1, keepdims=True)
+    p_x_given_z = p_x_and_z/p_z
+    means = (x*p_x_given_z).sum(axis=1, keepdims=True)
+    stdevs = np.sqrt(((x-means)**2*p_x_given_z).sum(axis=1, keepdims=True))
     return p_z, means, stdevs
   θ = maximization_step(p_z_given_x, x)
 
