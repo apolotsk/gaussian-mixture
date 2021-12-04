@@ -38,7 +38,7 @@ $θ_{t+1} := \{ p(z|θ_{t+1}), \mu_{z|θ_{t+1}}, \sigma_{z|θ_{t+1}} \text{ for 
   - $\sum_x p(z|x,θ_t)$ is the number of coin $z$ choices.
   - $|X|$ is the number of any coin choices.
 - $\mu_{z|θ_{t+1}} := \sum_x x \cdot p(x|z,θ_{t+1})$
-  - $p(x|z,θ_{t+1}) := \color{orange}{p(z|x,θ_t)} / |X| \Big/ p(z|θ_{t+1})$
+  - $p(x|z,θ_{t+1}) := \color{orange}{p(z|x,θ_t)} / |X| / p(z|θ_{t+1})$
 - $\sigma_{z|θ_{t+1}} := \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
 
 Proof:
@@ -88,7 +88,7 @@ Proof:
   - $\sum_x \color{orange}{p(z|x,θ_t)}/|X| \cdot \mu_{z|θ} = \sum_x \color{orange}{p(z|x,θ_t)}/|X| \cdot x$
   - $\mu_{z|θ} \cdot \sum_x \color{orange}{p(z|x,θ_t)}/|X| = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}/|X|$
   - $\mu_{z|θ} \cdot p(z|θ) = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}/|X|$
-  - $\mu_{z|θ} = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}/|X| \Big/ p(z|θ)$
+  - $\mu_{z|θ} = \sum_x x \cdot \color{orange}{p(z|x,θ_t)}/|X| / p(z|θ)$
   - $\mu_{z|θ} = \sum_x x \cdot p(x|z,θ)$
   - $= \sum_x x \cdot p(x|z,θ_{t+1})$
 - $\sigma_{z|θ_{t+1}}$
@@ -104,6 +104,6 @@ Proof:
   - $\sum_x \color{orange}{p(z|x,θ_t)}/|X| \cdot \sigma_{z|θ}^2 = \sum_x \color{orange}{p(z|x,θ_t)}/|X| \cdot (x-\mu_{z|θ})^2$
   - $\sigma_{z|θ}^2 \cdot \sum_x \color{orange}{p(z|x,θ_t)}/|X| = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}/|X|$
   - $\sigma_{z|θ}^2 \cdot p(z|θ) = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}/|X|$
-  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}/|X| \Big/ p(z|θ)$
+  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(z|x,θ_t)}/|X| / p(z|θ)$
   - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot p(x|z,θ)$
   - $= \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
