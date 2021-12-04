@@ -77,9 +77,9 @@ Proof:
 - $\mu_{z|θ_{t+1}}$
   - $:= \arg\max_{\mu_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \mu_{z|θ}} L(θ|θ_t,X) = 0$
-    - $= \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \mu_{z|θ}}$
+    - $= \sum_x \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \mu_{z|θ}}$
   - $\frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X)$
-    - $= \sum_x \color{orange}{p(z|x,θ_t)}/|X|/p(x|z,θ)$
+    - $= \color{orange}{p(z|x,θ_t)}/|X|/p(x|z,θ)$
   - $\frac {\partial p(x|z,θ)} {\partial \mu_{z|θ}}$
     - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot (-\frac 1 {2\sigma_{z|θ}^2} \cdot 2 \cdot (x-\mu_{z|θ}) \cdot (-1))$
     - $= p(x|z,θ) \cdot (x-\mu_{z|θ})/\sigma_{z|θ}^2$
@@ -94,7 +94,7 @@ Proof:
 - $\sigma_{z|θ_{t+1}}$
   - $:= \arg\max_{\sigma_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \sigma_{z|θ}} L(θ|θ_t,X) = 0$
-    - $= \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
+    - $= \sum_x \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
   - $\frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
     - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac {-(x-\mu_{z|θ})^2} 2 \frac {-2} {\sigma_{z|θ}^3} - \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac 1 \sigma_{z|θ}$
     - $= p(x|z,θ) \cdot (x-\mu_{z|θ})^2\sigma_{z|θ}^{-3} - p(x|z,θ) \cdot \sigma_{z|θ}^{-1}$
