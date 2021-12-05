@@ -33,7 +33,7 @@ $\color{green}{p(x,z|θ)} = p(z|θ) p(x|z,θ)$
   - $\mathcal{N}(x|\mu,\sigma)$ is a normal (Gaussian) distribution.
   - $p(x=a|z,θ)$ is the probability to sample value $a$ from the Gaussian $z$.
 
-$θ_{t+1} := \{ p(z|θ_{t+1}), \mu_{z|θ_{t+1}}, \sigma_{z|θ_{t+1}} \text{ for } z \in \{1, 2, ..., n \} \}$
+$θ_{t+1}$
 - $p(z|θ_{t+1}) := \sum_x \color{orange}{p(x,z|θ^\star_t)}$
   - $\color{orange}{p(x,z|θ^\star_t)} := \color{orange}{p(z|x,θ_t)}/|X|$
 - $\mu_{z|θ_{t+1}} := \sum_x x \cdot p(x|z,θ_{t+1})$
