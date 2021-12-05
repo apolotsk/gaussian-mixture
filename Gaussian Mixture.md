@@ -36,8 +36,6 @@ $\color{green}{p(x,z|θ)} = p(z|θ) p(x|z,θ)$
 $θ_{t+1} := \{ p(z|θ_{t+1}), \mu_{z|θ_{t+1}}, \sigma_{z|θ_{t+1}} \text{ for } z \in \{1, 2, ..., n \} \}$
 - $p(z|θ_{t+1}) := \sum_x \color{orange}{p(x,z|θ^\star_t)}$
   - $\color{orange}{p(x,z|θ^\star_t)} := \color{orange}{p(z|x,θ_t)}/|X|$
-  - $\sum_x \color{orange}{p(z|x,θ_t)}$ is the number of coin $z$ choices.
-  - $|X|$ is the number of any coin choices.
 - $\mu_{z|θ_{t+1}} := \sum_x x \cdot p(x|z,θ_{t+1})$
   - $p(x|z,θ_{t+1}) := \color{orange}{p(x,z|θ^\star_t)} / p(z|θ_{t+1})$
 - $\sigma_{z|θ_{t+1}} := \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
