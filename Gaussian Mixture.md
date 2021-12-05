@@ -17,10 +17,10 @@ Definitions:
   - $z$ is the _latent_ data.
   - $z \in \{ 1, 2, ..., n \}$.
    </br>![Histogram of the observable data and the latent data](.Gaussian%20Mixture.md/Histogram%20of%20the%20observable%20data%20and%20the%20latent%20data.svg)
-- That is, they know the set of $(x,z)$, but tell us only the set of $x$.
+- They know the set of $(x,z)$, but tell us only the set of $x$.
 - We want to infer the biases (the parameters).
   - This allows to infer the set of $(x,z)$.
-- We use the _Expectation-maximization_ algorithm given the set of $x$.
+- We use the _Expectation-maximization_ (EM) algorithm given the set of $x$.
 
 $θ := \{ p(z|θ), \mu_{z|θ}, \sigma_{z|θ} \text{ for } z \in \{1, 2, ..., n \} \}$
 - $p(z|θ)$ is the probability of selecting Gaussian $z$.
