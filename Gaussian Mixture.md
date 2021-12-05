@@ -36,9 +36,9 @@ $\color{green}{p(x,z|θ)} = p(z|θ) p(x|z,θ)$
 $θ_{t+1}$
 - $p(z|θ_{t+1}) := \sum_x \color{orange}{p(x,z|θ^\star_t)}$
   - $\color{orange}{p(x,z|θ^\star_t)} := \color{orange}{p(z|x,θ_t)}/|X|$
-- $\mu_{z|θ_{t+1}} := \sum_x x \cdot p(x|z,θ_{t+1})$
+- $\mu_{z|θ_{t+1}} := \sum_x p(x|z,θ_{t+1}) \cdot x$
   - $p(x|z,θ_{t+1}) := \color{orange}{p(x,z|θ^\star_t)} / p(z|θ_{t+1})$
-- $\sigma_{z|θ_{t+1}} := \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
+- $\sigma_{z|θ_{t+1}} := \sqrt{ \sum_x p(x|z,θ_{t+1}) \cdot (x-\mu_{z|θ_{t+1}})^2 }$
 
 Proof:
 - $p(z|θ_{t+1})$
@@ -88,11 +88,11 @@ Proof:
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ})/\sigma_{z|θ}^2 = 0$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ}) = 0$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot \mu_{z|θ} = \sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot x$
-  - $\mu_{z|θ} \cdot \sum_x \color{orange}{p(x,z|θ^\star_t)} = \sum_x x \cdot \color{orange}{p(x,z|θ^\star_t)}$
-  - $\mu_{z|θ} \cdot p(z|θ) = \sum_x x \cdot \color{orange}{p(x,z|θ^\star_t)}$
-  - $\mu_{z|θ} = \sum_x x \cdot \color{orange}{p(x,z|θ^\star_t)} / p(z|θ)$
-  - $\mu_{z|θ} = \sum_x x \cdot p(x|z,θ)$
-  - $= \sum_x x \cdot p(x|z,θ_{t+1})$
+  - $\mu_{z|θ} \cdot \sum_x \color{orange}{p(x,z|θ^\star_t)} = \sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot x$
+  - $\mu_{z|θ} \cdot p(z|θ) = \sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot x$
+  - $\mu_{z|θ} = \sum_x \color{orange}{p(x,z|θ^\star_t)} / p(z|θ) \cdot x$
+  - $\mu_{z|θ} = \sum_x p(x|z,θ) \cdot x$
+  - $= \sum_x p(x|z,θ_{t+1}) \cdot x$
 - $\sigma_{z|θ_{t+1}}$
   - $:= \arg\max_{\sigma_{z|θ}} L(θ|θ_t,X)$
   - $\frac \partial {\partial \sigma_{z|θ}} L(θ|θ_t,X) = 0$
@@ -104,8 +104,8 @@ Proof:
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot \sigma_{z|θ}^{-3} \left( (x-\mu_{z|θ})^2 - \sigma_{z|θ}^2 \right) = 0$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot \left( (x-\mu_{z|θ})^2 - \sigma_{z|θ}^2 \right) = 0$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot \sigma_{z|θ}^2 = \sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ})^2$
-  - $\sigma_{z|θ}^2 \cdot \sum_x \color{orange}{p(x,z|θ^\star_t)} = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(x,z|θ^\star_t)}$
-  - $\sigma_{z|θ}^2 \cdot p(z|θ) = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(x,z|θ^\star_t)}$
-  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot \color{orange}{p(x,z|θ^\star_t)} / p(z|θ)$
-  - $\sigma_{z|θ}^2 = \sum_x (x-\mu_{z|θ})^2 \cdot p(x|z,θ)$
-  - $= \sqrt{ \sum_x (x-\mu_{z|θ_{t+1}})^2 \cdot p(x|z,θ_{t+1}) }$
+  - $\sigma_{z|θ}^2 \cdot \sum_x \color{orange}{p(x,z|θ^\star_t)} = \sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ})^2$
+  - $\sigma_{z|θ}^2 \cdot p(z|θ) = \sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ})^2$
+  - $\sigma_{z|θ}^2 = \sum_x \color{orange}{p(x,z|θ^\star_t)} / p(z|θ) \cdot (x-\mu_{z|θ})^2$
+  - $\sigma_{z|θ}^2 = \sum_x p(x|z,θ) \cdot (x-\mu_{z|θ})^2$
+  - $= \sqrt{ \sum_x p(x|z,θ_{t+1}) \cdot (x-\mu_{z|θ_{t+1}})^2 }$
