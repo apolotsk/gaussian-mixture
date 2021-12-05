@@ -29,7 +29,7 @@ $θ := \{ p(z|θ), \mu_{z|θ}, \sigma_{z|θ} \text{ for } z \in \{1, 2, ..., n \
 
 $\color{green}{p(x,z|θ)} = p(z|θ) p(x|z,θ)$
 - $p(x|z,θ) := \mathcal{N}(x|\mu_{z|θ},\sigma_{z|θ})$
-  - $\mathcal{N}(x|\mu,\sigma) := \frac 1 {\sigma {\sqrt {2\pi }}} e^{- \frac {(x-\mu)^2} {2 \sigma^2}}$
+  - $\mathcal{N}(x|\mu,\sigma) := \frac 1 {\sigma {\sqrt{2\pi}}} e^{- \frac {(x-\mu)^2} {2 \sigma^2}}$
   - $\mathcal{N}(x|\mu,\sigma)$ is a normal (Gaussian) distribution.
   - $p(x=a|z,θ)$ is the probability to sample value $a$ from the Gaussian $z$.
 
@@ -85,7 +85,7 @@ Proof:
   - $\frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X)$
     - $= \color{orange}{p(x,z|θ^\star_t)}/p(x|z,θ)$
   - $\frac {\partial p(x|z,θ)} {\partial \mu_{z|θ}}$
-    - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot (-\frac 1 {2\sigma_{z|θ}^2} \cdot 2 \cdot (x-\mu_{z|θ}) \cdot (-1))$
+    - $= \frac 1 {\sigma_{z|θ} {\sqrt{2\pi}}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot (-\frac 1 {2\sigma_{z|θ}^2} \cdot 2 \cdot (x-\mu_{z|θ}) \cdot (-1))$
     - $= p(x|z,θ) \cdot (x-\mu_{z|θ})/\sigma_{z|θ}^2$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ})/\sigma_{z|θ}^2 = 0$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot (x-\mu_{z|θ}) = 0$
@@ -100,7 +100,7 @@ Proof:
   - $\frac \partial {\partial \sigma_{z|θ}} L(θ|θ_t,X) = 0$
     - $= \sum_x \frac \partial {\partial p(x|z,θ)} L(θ|θ_t,X) \cdot \frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
   - $\frac {\partial p(x|z,θ)} {\partial \sigma_{z|θ}}$
-    - $= \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac {-(x-\mu_{z|θ})^2} 2 \frac {-2} {\sigma_{z|θ}^3} - \frac 1 {\sigma_{z|θ} {\sqrt {2\pi }}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac 1 \sigma_{z|θ}$
+    - $= \frac 1 {\sigma_{z|θ} {\sqrt{2\pi}}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac {-(x-\mu_{z|θ})^2} 2 \frac {-2} {\sigma_{z|θ}^3} - \frac 1 {\sigma_{z|θ} {\sqrt{2\pi}}} e^{- \frac {(x-\mu_{z|θ})^2} {2 \sigma_{z|θ}^2}} \cdot \frac 1 \sigma_{z|θ}$
     - $= p(x|z,θ) \cdot (x-\mu_{z|θ})^2\sigma_{z|θ}^{-3} - p(x|z,θ) \cdot \sigma_{z|θ}^{-1}$
     - $= p(x|z,θ) \cdot \sigma_{z|θ}^{-3} \left( (x-\mu_{z|θ})^2 - \sigma_{z|θ}^2 \right)$
   - $\sum_x \color{orange}{p(x,z|θ^\star_t)} \cdot \sigma_{z|θ}^{-3} \left( (x-\mu_{z|θ})^2 - \sigma_{z|θ}^2 \right) = 0$
