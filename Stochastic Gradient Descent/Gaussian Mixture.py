@@ -1,7 +1,3 @@
-"""
-Gaussian mixture with 2 normal distribution.
-Uses _Stochastic Gradient Descent_, and not _Expectation-Maximization_ as mathematical optimization.
-"""
 import numpy as np
 np.random.seed(0)
 
