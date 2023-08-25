@@ -31,6 +31,9 @@ def x(target_θ):
   return x
 x = x(target_θ)
 
+from show import show_observable_data
+show_observable_data(x)
+
 print()
 print('Predicting the parameters given only the samples.')
 

@@ -15,6 +15,22 @@ def show_observable_and_latent_data(x, z):
   pyplot.title(title)
   #pyplot.savefig(f'{title}.svg')
   pyplot.show()
+
+def show_observable_data(x):
+  from matplotlib import pyplot
+  pyplot.clf()
+  pyplot.xlabel('$x$')
+  pyplot.ylabel('Count of $x$')
+  bin_size = 0.5
+  import numpy as np
+  bins = np.arange(x.min(), x.max(), bin_size)
+  pyplot.hist(x, bins=bins, color='g', alpha=0.3, label='Samples')
+  title = 'Histogram of the observable data'
+
+  pyplot.title(title)
+  #pyplot.savefig(f'{title}.svg')
+  pyplot.show()
+
 def show_inference(p_x, x, θ, target_θ):
   from matplotlib import pyplot
   pyplot.clf()
