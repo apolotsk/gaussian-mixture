@@ -31,6 +31,11 @@ $θ := \{ p(z|θ), \mu_{z|θ}, \sigma_{z|θ} \text{ for } z \in \{1, 2, ..., n \
 - $\mu_{z|θ}$ is the mean of the Gaussian $z$.
 - $\sigma_{z|θ}$ is the standard deviation of the Gaussian $z$.
 
+$\color{green}{p(x,z|θ)} = p(z|θ) p(x|z,θ)$
+- $p(x|z,θ) := \mathcal{N}(x|\mu_{z|θ},\sigma_{z|θ})$
+  - $\mathcal{N}(x|\mu,\sigma) := \frac 1 {\sigma {\sqrt{2\pi}}} e^{- \frac {(x-\mu)^2} {2 \sigma^2}}$
+  - $\mathcal{N}(x|\mu,\sigma)$ is a normal (Gaussian) distribution.
+  - $p(x=a|z,θ)$ is the probability to sample value $a$ from the Gaussian $z$.
 
 ## [A solution using Expectation-maximization](./Expectation-maximization/)
 
