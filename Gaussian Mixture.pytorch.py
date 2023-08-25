@@ -26,6 +26,9 @@ def x(target_θ):
   return tensor(x)
 x = x(target_θ)
 
+from show import show_observable_data
+show_observable_data(x.numpy())
+
 def θ():
   p_z = tensor(np.ones([z_length, 1])/z_length, requires_grad=True)
   means = tensor(np.random.rand(z_length, 1)*20, requires_grad=True)
