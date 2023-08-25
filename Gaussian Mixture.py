@@ -26,6 +26,8 @@ def x(target_θ):
   print(f'The real sample count of Gaussian 1 is {(z==0).sum()} and Gaussian 2 is {(z==1).sum()}.')
   samples = np.random.normal(means, stdevs, [z_length, x_length])
   x = np.choose(z, samples)
+  from show import show_observable_and_latent_data
+  show_observable_and_latent_data(x, z)
   return x
 x = x(target_θ)
 
