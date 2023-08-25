@@ -21,6 +21,8 @@ def x(target_θ):
   z = np.random.choice(z_length, size=x_length, p=p_z[:,0])
   samples = np.random.normal(means, stdevs, [z_length, x_length])
   x = np.choose(z, samples)
+  from show import show_observable_and_latent_data
+  show_observable_and_latent_data(x, z)
   return tensor(x)
 x = x(target_θ)
 
