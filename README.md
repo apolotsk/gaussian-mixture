@@ -17,11 +17,15 @@ This is examples of finding (inferring) parameters of a Gaussian Mixture
 ## The problem definitions
 - $x$ is the sample value.
   - $x$ is the **observable** data.
-  </br>![Histogram of the observable data](Expectation-maximization/.README.md/Histogram%20of%20the%20observable%20data.svg)
+
+![Histogram of the observable data](Expectation-maximization/.README.md/Histogram%20of%20the%20observable%20data.svg)
+
 - $z$ is the selected Gaussian.
   - $z$ is the **latent** data.
   - $z \in \{ 1, 2, ..., n \}$.
-   </br>![Histogram of the observable data and the latent data](Expectation-maximization/.README.md/Histogram%20of%20the%20observable%20data%20and%20the%20latent%20data.svg)
+
+![Histogram of the observable data and the latent data](Expectation-maximization/.README.md/Histogram%20of%20the%20observable%20data%20and%20the%20latent%20data.svg)
+
 - They know the set of $(x,z)$, but tell us only the set of $x$.
 - We want to infer (or find) the the parameters (of the Gaussians) $θ$.
   - This allows to infer the set of $(x,z)$.
