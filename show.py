@@ -7,11 +7,10 @@ def show_observable_and_latent_data(x, z):
   import numpy as np
   bins = np.arange(x.min(), x.max(), bin_size)
   x1, x2 = x[z==0], x[z==1]
-  pyplot.hist([x1, x2], bins=bins,color=['red', 'blue'], alpha=0.4, stacked=True, label='Samples')
-  pyplot.text(8, 200, '1', horizontalalignment='center', size=30, color='white')
-  pyplot.text(13, 100, '2', horizontalalignment='center', size=30, color='white')
+  pyplot.hist([x1, x2], bins=bins, color=['red', 'blue'], alpha=0.4, stacked=True, label=['Gaussian 1', 'Gaussian 2'])
   title = 'Histogram of the observable data and the latent data'
 
+  pyplot.legend(loc='upper right')
   pyplot.title(title)
   #pyplot.savefig(f'{title}.svg')
   pyplot.show()
