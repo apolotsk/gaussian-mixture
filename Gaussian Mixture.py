@@ -77,10 +77,10 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
 
     x = np.linspace(x.min(), x.max(), 1000)
     y = p_x(x, target_θ)
-    pyplot.plot(x, y, 'g-', alpha=0.3, label='$p(x)$')
+    pyplot.plot(x, y, 'g-', alpha=0.3, label='Target (real) distribution $p(x)$')
 
     y = p_x(x, θ)
-    pyplot.plot(x, y, 'b-', label='$p(x|θ)$')
+    pyplot.plot(x, y, 'b-', label='Predicted distribution $p(x|θ)$')
 
     p_z, means, stdevs = θ
     means, stdevs = means.T, stdevs.T
