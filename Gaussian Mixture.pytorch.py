@@ -7,6 +7,10 @@ np.random.seed(0)
 import torch
 from torch import tensor
 
+from typing import Iterable, Union
+def numpy(tensor:Union[torch.Tensor, Iterable])->np.ndarray:
+  return tensor.detach().numpy() if isinstance(tensor, torch.Tensor) else [numpy(t) for t in tensor]
+
 def target_θ():
   p_z = tensor(np.expand_dims([0.3, 0.7], axis=1))
   means = tensor(np.expand_dims([13.0, 8.0], axis=1))
@@ -66,6 +70,5 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
 
   def _p_x(x, θ):
     with torch.no_grad(): return p_x(tensor(x), tuple(map(tensor,θ))).numpy()
-  def numpy(tensor): return tensor.detach().numpy() if isinstance(tensor, torch.Tensor) else [numpy(t) for t in tensor]
   from show import show_inference
   show_inference(_p_x, numpy(x), numpy(θ), numpy(target_θ))
