@@ -10,11 +10,11 @@ def gauss(x, mean, stdev):
   return 1/sqrt(2*pi*stdev**2) * exp(-(x-mean)**2/(2*stdev**2))
 
 def target_θ():
-  p_z = np.expand_dims([0.7, 0.3], axis=1)
+  p_z = np.expand_dims([0.3, 0.7], axis=1)
   print(f'The real probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
-  means = np.expand_dims([8.0, 13.0], axis=1)
+  means = np.expand_dims([13.0, 8.0], axis=1)
   print(f'The real mean of Gaussian 1 is {means[0,0]:0.2f} and Gaussian 1 is {means[1,0]:0.2f}.')
-  stdevs = np.expand_dims([1.4, 1.0], axis=1)
+  stdevs = np.expand_dims([1.0, 1.4], axis=1)
   print(f'The real standard deviation of Gaussian 1 is {stdevs[0,0]:0.2f} and Gaussian 1 is {stdevs[1,0]:0.2f}.')
   return p_z, means, stdevs
 target_θ = target_θ()
