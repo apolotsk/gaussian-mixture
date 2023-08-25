@@ -86,13 +86,8 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   from show import show_inference
   show_inference(_p_x, numpy(x), numpy(θ), numpy(target_θ))
 
-  def image():
-    from matplotlib import pyplot
-    fig = pyplot.gcf()
-    image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
-    image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    return image
-  images.append(image())
+  from show import plot_to_image
+  images.append(plot_to_image())
 
 from imageio import mimsave
 mimsave('Prediction.gif', images)
