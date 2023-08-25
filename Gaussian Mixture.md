@@ -1,13 +1,13 @@
 ### Gaussian Mixture
 
 Description:
-- They have $n$ Gaussians.
+- They (as opposed to us) have $n$ (for example, 2) Gaussians.
 - They select one Gaussian according to some distribution.
 - They sample from the selected Gaussian.
 - They repeat the process several times.
 - They tell us a set of samples.
-- They do not tell us which Gaussian was used for each sample.
-- They do not tell us the distribution to select a Gaussian.
+- They do not tell us which Gaussian was used for each sample, but we want to know.
+- They do not tell us the distribution to select a Gaussian, but we want to know.
 
 Definitions:
 - $x$ is the sample value.
@@ -18,7 +18,7 @@ Definitions:
   - $z \in \{ 1, 2, ..., n \}$.
    </br>![Histogram of the observable data and the latent data](.Gaussian%20Mixture.md/Histogram%20of%20the%20observable%20data%20and%20the%20latent%20data.svg)
 - They know the set of $(x,z)$, but tell us only the set of $x$.
-- We want to infer the biases (the parameters).
+- We want to infer the the parameters (of the Gaussians) $θ$.
   - This allows to infer the set of $(x,z)$.
 - We use the _Expectation-maximization_ (EM) algorithm given the set of $x$.
 
