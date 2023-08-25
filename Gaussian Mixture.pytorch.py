@@ -7,7 +7,6 @@ np.random.seed(0)
 import torch
 from torch import tensor
 
-z_length, x_length = 2, 1000
 def target_θ():
   p_z = tensor(np.expand_dims([0.3, 0.7], axis=1))
   means = tensor(np.expand_dims([13.0, 8.0], axis=1))
@@ -15,6 +14,7 @@ def target_θ():
   return p_z, means, stdevs
 target_θ = target_θ()
 
+z_length, x_length = 2, 1000
 def x(target_θ):
   p_z, means, stdevs = target_θ
   p_z, means, stdevs = p_z.numpy(), means.numpy(), stdevs.numpy()
