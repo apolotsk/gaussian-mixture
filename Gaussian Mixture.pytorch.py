@@ -9,9 +9,9 @@ from torch import tensor
 
 z_length, x_length = 2, 1000
 def target_θ():
-  p_z = tensor(np.expand_dims([0.7, 0.3], axis=1))
-  means = tensor(np.expand_dims([8.0, 13.0], axis=1))
-  stdevs = tensor(np.expand_dims([1.4, 1.0], axis=1))
+  p_z = tensor(np.expand_dims([0.3, 0.7], axis=1))
+  means = tensor(np.expand_dims([13.0, 8.0], axis=1))
+  stdevs = tensor(np.expand_dims([1.0, 1.4], axis=1))
   return p_z, means, stdevs
 target_θ = target_θ()
 
