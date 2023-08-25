@@ -38,6 +38,7 @@ def θ():
   return p_z, means, stdevs
 θ = θ()
 
+images = []
 log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
 while abs(log_likelihood1-log_likelihood0)>1e-6:
   def expectation_step(x, θ):
@@ -93,9 +94,20 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     pyplot.pause(0.01)
   show(x)
 
+  def image():
+    from matplotlib import pyplot
+    fig = pyplot.gcf()
+    image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
+    image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    return image
+  images.append(image())
+
   def log_likelihood(x, θ):
     return np.log(p_x(x, θ)).mean(axis=0)
   log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
+
+from imageio import mimsave
+mimsave('Prediction.gif', images)
 
 p_z, means, stdevs = θ
 print(f'The predicted probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
