@@ -49,7 +49,7 @@ The predicted sample count of Gaussian 1 is 304.1 and Gaussian 2 is 695.9.
 
 [mle-wiki]: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Properties
 
-$θ_{t+1}$ is defined as following:
+$θ_{t+1}$ consists of the following parameters:
 - $p(z|θ_{t+1}) := \sum_x {\color{orange}p(x,z|θ^\star_t)}$
   - ${\color{orange}p(x,z|θ^\star_t)} := {\color{orange}p(z|x,θ_t)}/|X|$
 - $\mu_{z|θ_{t+1}} := \sum_x p(x|z,θ_{t+1}) \cdot x$
