@@ -11,8 +11,11 @@ def gauss(x, mean, stdev):
 
 def target_θ():
   p_z = np.expand_dims([0.7, 0.3], axis=1)
+  print(f'The real probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
   means = np.expand_dims([8.0, 13.0], axis=1)
+  print(f'The real mean of Gaussian 1 is {means[0,0]:0.2f} and Gaussian 1 is {means[1,0]:0.2f}.')
   stdevs = np.expand_dims([1.4, 1.0], axis=1)
+  print(f'The real standard deviation of Gaussian 1 is {stdevs[0,0]:0.2f} and Gaussian 1 is {stdevs[1,0]:0.2f}.')
   return p_z, means, stdevs
 target_θ = target_θ()
 
@@ -20,9 +23,13 @@ z_length, x_length = 2, 1000
 def x(target_θ):
   p_z, means, stdevs = target_θ
   z = np.random.choice(z_length, size=x_length, p=p_z[:,0])
+  print(f'The real sample count of Gaussian 1 is {(z==0).sum()} and Gaussian 2 is {(z==1).sum()}.')
   samples = np.random.normal(means, stdevs, [z_length, x_length])
   return np.choose(z, samples)
 x = x(target_θ)
+
+print()
+print('Predicting the parameters given only the samples.')
 
 def θ():
   p_z = np.ones([z_length, 1])/z_length
@@ -89,3 +96,12 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
   def log_likelihood(x, θ):
     return np.log(p_x(x, θ)).mean(axis=0)
   log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
+
+p_z, means, stdevs = θ
+print(f'The predicted probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
+print(f'The predicted mean of Gaussian 1 is {means[0,0]:0.2f} and Gaussian 2 is {means[1,0]:0.2f}.')
+print(f'The predicted standard deviation of Gaussian 1 is {stdevs[0,0]:0.2f} and Gaussian 2 is {stdevs[1,0]:0.2f}.')
+
+p_z_and_x = p_z * gauss(x, means, stdevs)
+z = p_z_and_x/p_z_and_x.sum(axis=0)
+print(f'The predicted sample count of Gaussian 1 is {z[0].sum():.1f} and Gaussian 2 is {z[1].sum():.1f}.')
