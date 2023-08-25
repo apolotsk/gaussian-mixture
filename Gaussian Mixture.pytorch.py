@@ -59,33 +59,8 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     optimizer.step()
   update_parameters()
 
-  def show(x):
-    from matplotlib import pyplot
-    pyplot.clf()
-    pyplot.xlabel('x')
-    pyplot.ylabel('p(x|θ)')
-    bin_size = 0.5
-    bins = np.arange(x.min(), x.max(), bin_size)
-    weights = np.ones_like(x)/len(x)/bin_size
-    x = x.numpy()
-    pyplot.hist(x, bins=bins, weights=weights, color='g', alpha=0.3, label='Samples')
-
-    x = np.linspace(x.min(), x.max(), 1000)
-    def _p_x(x, θ):
-      with torch.no_grad(): return p_x(tensor(x), θ).numpy()
-    y = _p_x(x, target_θ)
-    pyplot.plot(x, y, 'g-', alpha=0.3, label='p(x)')
-
-    y = _p_x(x, θ)
-    pyplot.plot(x, y, 'b-', label='p(x|θ)')
-
-    p_z, means, stdevs = θ
-    means, stdevs = means.T, stdevs.T
-    with torch.no_grad(): means, stdevs = means.numpy(), stdevs.numpy()
-    y = _p_x(means, θ)
-    pyplot.plot(means + [[-1],[1]]*stdevs, y/[[2],[2]], '|-b', alpha=0.3, linewidth=1)
-    pyplot.plot([[1],[1]]*means, [[0],[1]]*y, '|-b', alpha=0.3, linewidth=1)
-
-    pyplot.show(block=False)
-    pyplot.pause(0.01)
-  show(x)
+  def _p_x(x, θ):
+    with torch.no_grad(): return p_x(tensor(x), tuple(map(tensor,θ))).numpy()
+  def numpy(tensor): return tensor.detach().numpy() if isinstance(tensor, torch.Tensor) else [numpy(t) for t in tensor]
+  from show import show_inference
+  show_inference(_p_x, numpy(x), numpy(θ), numpy(target_θ))
