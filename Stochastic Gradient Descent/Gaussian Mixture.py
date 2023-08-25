@@ -56,7 +56,9 @@ def find_parameters(x):
     return SGD(parameters, lr=1.0)
   optimizer = optimizer(θ)
 
-  images = []
+  from show import Animation
+  animation = Animation()
+
   log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
   while abs(log_likelihood1-log_likelihood0)>1e-6:
     def p_x(x, θ):
@@ -84,13 +86,9 @@ def find_parameters(x):
       with torch.no_grad(): return p_x(tensor(x), tuple(map(tensor,θ))).numpy()
     from show import show_inference
     show_inference(_p_x, numpy(x), numpy(θ), numpy(target_θ))
+    animation.add_plot()
 
-    from show import plot_to_image
-    images.append(plot_to_image())
-
-  from imageio import mimsave
-  mimsave('Find parameters.gif', images)
-
+  animation.save('Find parameters.gif')
   return θ
 θ = find_parameters(x)
 

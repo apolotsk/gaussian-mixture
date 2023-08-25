@@ -43,7 +43,9 @@ def find_parameters(x):
     return p_z, means, stdevs
   θ = θ()
 
-  images = []
+  from show import Animation
+  animation = Animation()
+
   log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
   while abs(log_likelihood1-log_likelihood0)>1e-6:
     def expectation_step(x, θ):
@@ -73,17 +75,13 @@ def find_parameters(x):
 
     from show import show_inference
     show_inference(p_x, x, θ, target_θ)
-
-    from show import plot_to_image
-    images.append(plot_to_image())
+    animation.add_plot()
 
     def log_likelihood(x, θ):
       return np.log(p_x(x, θ)).mean(axis=0)
     log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
 
-  from imageio import mimsave
-  mimsave('Find parameters.gif', images)
-
+  animation.save('Find parameters.gif')
   return θ
 θ = find_parameters(x)
 

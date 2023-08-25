@@ -58,10 +58,15 @@ def show_inference(p_x, x, θ, target_θ):
   pyplot.show(block=False)
   pyplot.pause(0.01)
 
-def plot_to_image():
-  from matplotlib import pyplot
-  fig = pyplot.gcf()
-  import numpy as np
-  image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
-  image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-  return image
+class Animation:
+  images = []
+  def add_plot(self):
+    from matplotlib import pyplot
+    fig = pyplot.gcf()
+    import numpy as np
+    image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
+    image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    self.images.append(image)
+  def save(self, filepath:str='animation.gif'):
+    from imageio import mimsave
+    mimsave(filepath, self.images)
