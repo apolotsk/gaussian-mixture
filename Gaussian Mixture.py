@@ -9,7 +9,6 @@ def gauss(x, mean, stdev):
   from numpy import pi, sqrt, exp
   return 1/sqrt(2*pi*stdev**2) * exp(-(x-mean)**2/(2*stdev**2))
 
-z_length, x_length = 2, 1000
 def target_θ():
   p_z = np.expand_dims([0.7, 0.3], axis=1)
   means = np.expand_dims([8.0, 13.0], axis=1)
@@ -17,6 +16,7 @@ def target_θ():
   return p_z, means, stdevs
 target_θ = target_θ()
 
+z_length, x_length = 2, 1000
 def x(target_θ):
   p_z, means, stdevs = target_θ
   z = np.random.choice(z_length, size=x_length, p=p_z[:,0])
