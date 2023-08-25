@@ -1,7 +1,3 @@
-"""
-Gaussian mixture with 2 normal distribution.
-http://courses.cs.washington.edu/courses/cse312/11wi/slides/12em.pdf
-"""
 import numpy as np
 np.random.seed(0)
 
