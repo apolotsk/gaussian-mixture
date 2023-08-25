@@ -4,6 +4,11 @@ Uses _Stochastic Gradient Descent_, and not _Expectation-Maximization_ as mathem
 """
 import numpy as np
 np.random.seed(0)
+
+def gauss(x, mean, stdev):
+  from numpy import pi, sqrt, exp
+  return 1/sqrt(2*pi*stdev**2) * exp(-(x-mean)**2/(2*stdev**2))
+
 import torch
 from torch import tensor
 
@@ -13,8 +18,11 @@ def numpy(tensor:Union[torch.Tensor, Iterable])->np.ndarray:
 
 def target_θ():
   p_z = tensor(np.expand_dims([0.3, 0.7], axis=1))
+  print(f'The real probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
   means = tensor(np.expand_dims([13.0, 8.0], axis=1))
+  print(f'The real mean of Gaussian 1 is {means[0,0]:0.2f} and Gaussian 1 is {means[1,0]:0.2f}.')
   stdevs = tensor(np.expand_dims([1.0, 1.4], axis=1))
+  print(f'The real standard deviation of Gaussian 1 is {stdevs[0,0]:0.2f} and Gaussian 1 is {stdevs[1,0]:0.2f}.')
   return p_z, means, stdevs
 target_θ = target_θ()
 
@@ -23,6 +31,7 @@ def x(target_θ):
   p_z, means, stdevs = target_θ
   p_z, means, stdevs = p_z.numpy(), means.numpy(), stdevs.numpy()
   z = np.random.choice(z_length, size=x_length, p=p_z[:,0])
+  print(f'The real sample count of Gaussian 1 is {(z==0).sum()} and Gaussian 2 is {(z==1).sum()}.')
   samples = np.random.normal(means, stdevs, [z_length, x_length])
   x = np.choose(z, samples)
   from show import show_observable_and_latent_data
@@ -32,6 +41,9 @@ x = x(target_θ)
 
 from show import show_observable_data
 show_observable_data(x.numpy())
+
+print()
+print('Predicting the parameters given only the samples.')
 
 def θ():
   p_z = tensor(np.ones([z_length, 1])/z_length, requires_grad=True)
@@ -72,3 +84,13 @@ while abs(log_likelihood1-log_likelihood0)>1e-6:
     with torch.no_grad(): return p_x(tensor(x), tuple(map(tensor,θ))).numpy()
   from show import show_inference
   show_inference(_p_x, numpy(x), numpy(θ), numpy(target_θ))
+
+x = numpy(x)
+p_z, means, stdevs = numpy(θ)
+print(f'The predicted probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
+print(f'The predicted mean of Gaussian 1 is {means[0,0]:0.2f} and Gaussian 2 is {means[1,0]:0.2f}.')
+print(f'The predicted standard deviation of Gaussian 1 is {stdevs[0,0]:0.2f} and Gaussian 2 is {stdevs[1,0]:0.2f}.')
+
+p_z_and_x = p_z * gauss(x, means, stdevs)
+z = p_z_and_x/p_z_and_x.sum(axis=0)
+print(f'The predicted sample count of Gaussian 1 is {z[0].sum():.1f} and Gaussian 2 is {z[1].sum():.1f}.')
