@@ -32,56 +32,60 @@ def x(target_θ):
   return x
 x = x(target_θ)
 
-print()
-print('Predicting the parameters given only the samples.')
+def find_parameters(x):
+  print()
+  print('Finding the parameters given only the samples.')
 
-def θ():
-  p_z = np.ones([z_length, 1])/z_length
-  means = np.random.rand(z_length, 1)*20
-  stdevs = np.random.rand(z_length, 1)*5
-  return p_z, means, stdevs
-θ = θ()
-
-images = []
-log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
-while abs(log_likelihood1-log_likelihood0)>1e-6:
-  def expectation_step(x, θ):
-    p_z, means, stdevs = θ
-    p_x_given_z = gauss(x, means, stdevs)
-    p_z_and_x = p_z*p_x_given_z
-    p_x = p_z_and_x.sum(axis=0, keepdims=True)
-    p_z_given_x = p_z_and_x/p_x
-    return p_z_given_x
-  p_z_given_x = expectation_step(x, θ)
-
-  def maximization_step(p_z_given_x, x):
-    p_x_and_z = p_z_given_x/len(x)
-    p_z = p_x_and_z.sum(axis=1, keepdims=True)
-    p_x_given_z = p_x_and_z/p_z
-    means = (p_x_given_z * x).sum(axis=1, keepdims=True)
-    stdevs = np.sqrt((p_x_given_z * (x-means)**2).sum(axis=1, keepdims=True))
+  def θ():
+    p_z = np.ones([z_length, 1])/z_length
+    means = np.random.rand(z_length, 1)*20
+    stdevs = np.random.rand(z_length, 1)*5
     return p_z, means, stdevs
-  θ = maximization_step(p_z_given_x, x)
+  θ = θ()
 
-  def p_x(x, θ):
-    p_z, means, stdevs = θ
-    p_x_given_z = gauss(x, means, stdevs)
-    p_z_and_x = p_z*p_x_given_z
-    p_x = p_z_and_x.sum(axis=0)
-    return p_x
+  images = []
+  log_likelihood1, log_likelihood0 = float('inf'), float('-inf')
+  while abs(log_likelihood1-log_likelihood0)>1e-6:
+    def expectation_step(x, θ):
+      p_z, means, stdevs = θ
+      p_x_given_z = gauss(x, means, stdevs)
+      p_z_and_x = p_z*p_x_given_z
+      p_x = p_z_and_x.sum(axis=0, keepdims=True)
+      p_z_given_x = p_z_and_x/p_x
+      return p_z_given_x
+    p_z_given_x = expectation_step(x, θ)
 
-  from show import show_inference
-  show_inference(p_x, x, θ, target_θ)
+    def maximization_step(p_z_given_x, x):
+      p_x_and_z = p_z_given_x/len(x)
+      p_z = p_x_and_z.sum(axis=1, keepdims=True)
+      p_x_given_z = p_x_and_z/p_z
+      means = (p_x_given_z * x).sum(axis=1, keepdims=True)
+      stdevs = np.sqrt((p_x_given_z * (x-means)**2).sum(axis=1, keepdims=True))
+      return p_z, means, stdevs
+    θ = maximization_step(p_z_given_x, x)
 
-  from show import plot_to_image
-  images.append(plot_to_image())
+    def p_x(x, θ):
+      p_z, means, stdevs = θ
+      p_x_given_z = gauss(x, means, stdevs)
+      p_z_and_x = p_z*p_x_given_z
+      p_x = p_z_and_x.sum(axis=0)
+      return p_x
 
-  def log_likelihood(x, θ):
-    return np.log(p_x(x, θ)).mean(axis=0)
-  log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
+    from show import show_inference
+    show_inference(p_x, x, θ, target_θ)
 
-from imageio import mimsave
-mimsave('Prediction.gif', images)
+    from show import plot_to_image
+    images.append(plot_to_image())
+
+    def log_likelihood(x, θ):
+      return np.log(p_x(x, θ)).mean(axis=0)
+    log_likelihood1, log_likelihood0 = log_likelihood(x, θ), log_likelihood1
+
+  from imageio import mimsave
+  mimsave('Find parameters.gif', images)
+
+  return θ
+θ = find_parameters(x)
 
 p_z, means, stdevs = θ
 print(f'The predicted probability probability of selecting Gaussian 1 is {p_z[0,0]:0.2f} and Gaussian 2 is {p_z[1,0]:0.2f}.')
