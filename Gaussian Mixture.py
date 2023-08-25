@@ -25,7 +25,8 @@ def x(target_θ):
   z = np.random.choice(z_length, size=x_length, p=p_z[:,0])
   print(f'The real sample count of Gaussian 1 is {(z==0).sum()} and Gaussian 2 is {(z==1).sum()}.')
   samples = np.random.normal(means, stdevs, [z_length, x_length])
-  return np.choose(z, samples)
+  x = np.choose(z, samples)
+  return x
 x = x(target_θ)
 
 print()
