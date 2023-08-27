@@ -14,7 +14,7 @@ This is examples of finding (inferring) parameters of a Gaussian Mixture
 - They do not tell us which Gaussian was used for each sample, but we want to know.
 - They do not tell us the distribution to select a Gaussian, but we want to know.
 
-## The problem definitions
+## The problem definition
 - $x$ is the sample value.
   - $x$ is the **observable** data.
 
